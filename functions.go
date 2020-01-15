@@ -27,10 +27,10 @@ func WriteToFile(content string, path string) {
 	}
 }
 
-func SendMail(host string, port int, user string, password string, from string, to string, subject string, body string, attach string) {
+func SendMail(host string, port int, user string, password string, from string, to []string, subject string, body string, attach string) {
 	m := gomail.NewMessage()
 	m.SetHeader("From", from)
-	m.SetHeader("To", to)
+	m.SetHeader("To", to...)
 	//m.SetAddressHeader("Cc", cc, "autobot")
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/html", body)
