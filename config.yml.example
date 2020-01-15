@@ -1,0 +1,12 @@
+paths:
+  excelfile: "./excel.xlsx"
+
+smtp:
+  host: "mail.123.com"
+  port: 587
+  user: "123@123.com"
+  pass: "Qwerty123"
+  from: "123@123.com"
+  to: "321@gmail.com"
+  cc: ""
+  subject: "KUKU EPTA"
