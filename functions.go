@@ -42,6 +42,5 @@ func SendMail(host string, port int, user string, password string, from string, 
 
 	if err := d.DialAndSend(m); err != nil {
 		println(err.Error())
-		//panic(err)
 	}
 }

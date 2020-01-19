@@ -29,7 +29,7 @@ func main() {
 		return
 	}
 
-	// Get all the rows in the Sheet1.
+	// Get all the rows in the Sheet.
 	for i := cfg.Excel.CheckingRowStart; i <= cfg.Excel.CheckingRowEnd; i++ {
 		client, err := f.GetCellValue(cfg.Excel.Sheet, cfg.Excel.NameColumn+strconv.Itoa(i))
 		if err != nil {

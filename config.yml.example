@@ -1,12 +1,24 @@
-paths:
-  excelfile: "./excel.xlsx"
+common:
+  notify-for-days: 10
+  admins-emails: ["admin@mail.com"]
+  table-caption: "TABLE NAME"
+  table-header-name-column: "Client name"
+  table-header-checking-column: "License expiration date"
+
+excel:
+  file: "./excel.xlsx"
+  sheet: "Sheet1"
+  name-column: "A"
+  checking-column: "B"
+  checking-row-start: 2
+  checking-row-end: 100
 
 smtp:
-  host: "mail.123.com"
+  host: "mail.company.com"
   port: 587
-  user: "123@123.com"
-  pass: "Qwerty123"
-  from: "123@123.com"
-  to: "321@gmail.com"
+  user: "svc-mail"
+  pass: "qwerty123"
+  from: "svc-mail@company.com"
+  to: ["boss@mail.com"]
   cc: ""
-  subject: "KUKU EPTA"
+  subject: "ALARM"
