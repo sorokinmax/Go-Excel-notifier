@@ -63,8 +63,8 @@ func main() {
 		dueDate, err := time.Parse("01-02-06", v.DueDate)
 		if err == nil {
 			if dueDate.Before(today.Add(cfg.Common.NotifyForDays * 24 * time.Hour)) {
-				println(v.Client, dueDate.String())
-				expiringLicenses = append(expiringLicenses, License{v.Client, v.DueDate})
+				println(v.Client, dueDate.Format("2006-01-02"))
+				expiringLicenses = append(expiringLicenses, License{v.Client, dueDate.Format("2006-01-02")})
 			}
 		}
 	}
