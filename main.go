@@ -23,21 +23,21 @@ func main() {
 
 	readConfigFile(&cfg)
 
-	f, err := excelize.OpenFile(cfg.Common.ExcelFile)
+	f, err := excelize.OpenFile(cfg.Excel.File)
 	if err != nil {
 		println(err.Error())
 		return
 	}
 
 	// Get all the rows in the Sheet1.
-	for i := 11; i < 101; i++ {
-		client, err := f.GetCellValue("Лист1", "D"+strconv.Itoa(i))
+	for i := cfg.Excel.CheckingRowStart; i <= cfg.Excel.CheckingRowEnd; i++ {
+		client, err := f.GetCellValue(cfg.Excel.Sheet, cfg.Excel.NameColumn+strconv.Itoa(i))
 		if err != nil {
 			println(err.Error())
 			return
 		}
 		if client != "" {
-			dueDateStr, err := f.GetCellValue("Лист1", "F"+strconv.Itoa(i))
+			dueDateStr, err := f.GetCellValue(cfg.Excel.Sheet, cfg.Excel.CheckingColumn+strconv.Itoa(i))
 			if err != nil {
 				println(err.Error())
 				return
@@ -48,7 +48,7 @@ func main() {
 
 	//sending all licenses to admins
 	var tpl bytes.Buffer
-	t := template.Must(template.New("").Parse(`<body><h1>PSPDFKit expiring licenses</h1><br><table border="1"><td><strong>Bundle ID</strong></td><td><strong>Expiration date</strong></td>{{range .}}<tr><td>{{.Client}}</td><td>{{.DueDate}}</td></tr>{{end}}</table></body>`))
+	t := template.Must(template.New("").Parse(`<body><h1>All data</h1><br><table border="1"><td><strong>` + cfg.Common.TableHeaderNameColumn + `</strong></td><td><strong>` + cfg.Common.TableHeaderCheckingColumn + `</strong></td>{{range .}}<tr><td>{{.Client}}</td><td>{{.DueDate}}</td></tr>{{end}}</table></body>`))
 	if err := t.Execute(&tpl, licenses); err != nil {
 		log.Fatal(err)
 	}
@@ -70,7 +70,7 @@ func main() {
 	}
 
 	tpl.Reset()
-	t = template.Must(template.New("").Parse(`<body><h1>PSPDFKit expiring licenses</h1><br><table border="1"><td><strong>Bundle ID</strong></td><td><strong>Expiration date</strong></td>{{range .}}<tr><td>{{.Client}}</td><td>{{.DueDate}}</td></tr>{{end}}</table></body>`))
+	t = template.Must(template.New("").Parse(`<body><h1>` + cfg.Common.TableCaption + `</h1><br><table border="1"><td><strong>` + cfg.Common.TableHeaderNameColumn + `</strong></td><td><strong>` + cfg.Common.TableHeaderCheckingColumn + `</strong></td>{{range .}}<tr><td>{{.Client}}</td><td>{{.DueDate}}</td></tr>{{end}}</table></body>`))
 	if err := t.Execute(&tpl, expiringLicenses); err != nil {
 		log.Fatal(err)
 	}

@@ -12,10 +12,20 @@ import (
 // Config struct
 type Config struct {
 	Common struct {
-		ExcelFile     string        `yaml:"excelfile"`
-		NotifyForDays time.Duration `yaml:"notify-for-days"`
-		AdminsEmails  []string      `yaml:"admins-emails"`
+		NotifyForDays             time.Duration `yaml:"notify-for-days"`
+		AdminsEmails              []string      `yaml:"admins-emails"`
+		TableCaption              string        `yaml:"table-caption"`
+		TableHeaderNameColumn     string        `yaml:"table-header-name-column"`
+		TableHeaderCheckingColumn string        `yaml:"table-header-checking-column"`
 	} `yaml:"common"`
+	Excel struct {
+		File             string `yaml:"file"`
+		Sheet            string `yaml:"sheet"`
+		NameColumn       string `yaml:"name-column"`
+		CheckingColumn   string `yaml:"checking-column"`
+		CheckingRowStart int    `yaml:"checking-row-start"`
+		CheckingRowEnd   int    `yaml:"checking-row-end"`
+	} `yaml:"excel"`
 	SMTP struct {
 		Host     string   `yaml:"host"`
 		Port     int      `yaml:"port"`
