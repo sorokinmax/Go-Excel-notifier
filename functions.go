@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 
 	"gopkg.in/gomail.v2"
@@ -10,20 +10,19 @@ import (
 func WriteToFile(content string, path string) {
 	f, err := os.Create(path)
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalln(err)
 	}
+	defer f.Close()
+
 	l, err := f.WriteString(content)
 	if err != nil {
-		fmt.Println(err)
 		f.Close()
-		return
+		log.Fatalln(err)
 	}
-	fmt.Println(l, "bytes written successfully")
+	log.Println(l, "bytes written successfully")
 	err = f.Close()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalln(err)
 	}
 }
 
@@ -41,6 +40,15 @@ func SendMail(host string, port int, user string, password string, from string, 
 	d := gomail.NewDialer(host, port, user, password)
 
 	if err := d.DialAndSend(m); err != nil {
-		println(err.Error())
+		log.Println(err)
 	}
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }

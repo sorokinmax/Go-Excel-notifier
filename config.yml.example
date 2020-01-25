@@ -12,6 +12,8 @@ excel:
   checking-column: "B"
   checking-row-start: 2
   checking-row-end: 100
+  personal-notification-bundles: [""]
+  personal-notification-emails: ["admin@cleint.com"]
 
 smtp:
   host: "mail.company.com"

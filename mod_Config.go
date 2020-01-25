@@ -19,12 +19,14 @@ type Config struct {
 		TableHeaderCheckingColumn string        `yaml:"table-header-checking-column"`
 	} `yaml:"common"`
 	Excel struct {
-		File             string `yaml:"file"`
-		Sheet            string `yaml:"sheet"`
-		NameColumn       string `yaml:"name-column"`
-		CheckingColumn   string `yaml:"checking-column"`
-		CheckingRowStart int    `yaml:"checking-row-start"`
-		CheckingRowEnd   int    `yaml:"checking-row-end"`
+		File                        string   `yaml:"file"`
+		Sheet                       string   `yaml:"sheet"`
+		NameColumn                  string   `yaml:"name-column"`
+		CheckingColumn              string   `yaml:"checking-column"`
+		CheckingRowStart            int      `yaml:"checking-row-start"`
+		CheckingRowEnd              int      `yaml:"checking-row-end"`
+		PersonalNotificationBundles []string `yaml:"personal-notification-bundles"`
+		PersonalNotificationEmails  []string `yaml:"personal-notification-emails"`
 	} `yaml:"excel"`
 	SMTP struct {
 		Host     string   `yaml:"host"`
@@ -41,19 +43,20 @@ type Config struct {
 func readConfigFile(cfg *Config) {
 	f, err := os.Open("config.yml")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
+	defer f.Close()
 
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(cfg)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 }
 
 func readConfigEnv(cfg *Config) {
 	err := envconfig.Process("", cfg)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 }
