@@ -68,13 +68,13 @@ func main() {
 	//sending all expiring licenses
 	for _, v := range licenses {
 		err = nil
-		dueDate, err := time.Parse("01-02-06", v.DueDate)
+		dueDate, err := time.Parse(cfg.Common.DateFormat, v.DueDate)
 		if err != nil {
 			log.Println(err)
 		} else {
 			if dueDate.Before(today.Add(cfg.Common.NotifyForDays * 24 * time.Hour)) {
 				//log.Println(v.BundleID, dueDate.Format("2006-01-02"))
-				expiringLicenses = append(expiringLicenses, License{v.BundleID, dueDate.Format("2006-01-02")})
+				expiringLicenses = append(expiringLicenses, License{v.BundleID, dueDate.Format(cfg.Common.DateFormat)})
 			}
 		}
 	}
@@ -91,13 +91,13 @@ func main() {
 	expiringLicenses = nil
 	for _, v := range licenses {
 		err = nil
-		dueDate, err := time.Parse("01-02-06", v.DueDate)
+		dueDate, err := time.Parse(cfg.Common.DateFormat, v.DueDate)
 		if err != nil {
 			log.Println(err)
 		} else {
 			if dueDate.Before(today.Add(cfg.Common.NotifyForDays*24*time.Hour)) && contains(cfg.Excel.PersonalNotificationBundles, v.BundleID) {
 				//log.Println(v.BundleID, dueDate.Format("2006-01-02"))
-				expiringLicenses = append(expiringLicenses, License{v.BundleID, dueDate.Format("2006-01-02")})
+				expiringLicenses = append(expiringLicenses, License{v.BundleID, dueDate.Format(cfg.Common.DateFormat)})
 			}
 		}
 	}

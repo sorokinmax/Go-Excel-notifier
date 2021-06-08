@@ -17,6 +17,7 @@ type Config struct {
 		TableCaption              string        `yaml:"table-caption"`
 		TableHeaderNameColumn     string        `yaml:"table-header-name-column"`
 		TableHeaderCheckingColumn string        `yaml:"table-header-checking-column"`
+		DateFormat                string        `yaml:"date-format"`
 	} `yaml:"common"`
 	Excel struct {
 		File                        string   `yaml:"file"`
